@@ -3,11 +3,9 @@ import com.cohida.LearnAIzer.Model.StudyTopic;
 import com.cohida.LearnAIzer.Service.StudyTopicService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/study")
@@ -23,21 +21,24 @@ public class StudyTopicController {
     }
 
     // POST
+    @PostMapping
     public ResponseEntity<StudyTopic> createStudyTopic(@RequestBody StudyTopic studyTopic) {
         StudyTopic savedStudyTopic = studyTopicService.saveStudyTopic(studyTopic);
         return ResponseEntity.ok(savedStudyTopic);
     }
 
     // GET ALL
+    @GetMapping
     public ResponseEntity<List<StudyTopic>> listAllStudyTopics() {
         List<StudyTopic> studyTopics = studyTopicService.listAllStudyTopics();
         return ResponseEntity.ok(studyTopics);
     }
 
     // GET BY ID
-    public ResponseEntity<?> listStudyTopicById(Long id) {
-        StudyTopic studyTopicById = studyTopicService.listStudyTopicById(id);
-        if (studyTopicById != null) {
+    @GetMapping
+    public ResponseEntity<?> listStudyTopicById(@PathVariable Long id) {
+        Optional<StudyTopic> studyTopicById = studyTopicService.listStudyTopicById(id);
+        if (studyTopicById.isPresent()) {
             return ResponseEntity.ok(studyTopicById);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -46,26 +47,21 @@ public class StudyTopicController {
     }
 
     // UPDATE
-    public ResponseEntity<?> editStudyTopic(@RequestBody StudyTopic studyTopic, Long id) {
-        StudyTopic editedStudyTopic = studyTopicService.editStudyTopic(studyTopic, id);
-        if (editedStudyTopic != null) {
-            return ResponseEntity.ok(editedStudyTopic);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Error: StudyTopic Not Found");
-        }
+    @PutMapping("/{id}")
+    public ResponseEntity<StudyTopic> editStudyTopic(@RequestBody StudyTopic studyTopic, @PathVariable Long id) {
+        return studyTopicService.listStudyTopicById(id)
+                .map(existingStudyTopic -> {
+                    studyTopic.setId(existingStudyTopic.getId());
+                    StudyTopic updatedStudyTopic = studyTopicService.editStudyTopic(studyTopic);
+                    return ResponseEntity.ok(updatedStudyTopic);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // DELETE
-    public ResponseEntity<String> deleteStudyTopic(Long id) {
-        StudyTopic existingStudyTopic = studyTopicService.listStudyTopicById(id);
-        if (existingStudyTopic != null) {
-            studyTopicService.deleteStudyTopic(id);
-            return ResponseEntity.ok("StudyTopic deleted successfully!");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Error: StudyTopic Not Found!");
+    @DeleteMapping
+    public ResponseEntity<String> deleteStudyTopic(@PathVariable Long id) {
+        studyTopicService.deleteStudyTopic(id);
+        return ResponseEntity.noContent().build();
         }
     }
-
-}
