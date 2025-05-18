@@ -1,5 +1,6 @@
 package com.cohida.LearnAIzer.service;
 
+import com.cohida.LearnAIzer.model.StudyTopic;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GeminiService {
@@ -19,8 +21,20 @@ public class GeminiService {
         this.webClient = webClient;
     }
 
-    public Mono<String> generatePlan() {
-        String prompt = "Baseado em meu banco de dados, crie uma plano de estudos para mim";
+    public Mono<String> generatePlan(List<StudyTopic> studyTopics) {
+        String topics = studyTopics.stream()
+                .map(item -> String.format(
+                        "%s (Conhecimento atual: %s, Estilo de estudo: %s, Objetivo: %s) - Tempo disponível: %d horas por semana, Prazo: %s",
+                        item.getStudyTopic(),
+                        item.getCurrentKnowledge(),
+                        item.getStudyStyle(),
+                        item.getObjective(),
+                        item.getTimeAvailable(),
+                        item.getDueDate().toString()))
+                .collect(Collectors.joining("\n"));
+
+        String prompt = "Crie uma rotina de estudos para mim, de segunda à sábado, baseado nos seguintes tópicos: " + topics;
+
         Map<String, Object> requestBody = Map.of(
                 "contents", List.of(
                         Map.of("parts", List.of(
