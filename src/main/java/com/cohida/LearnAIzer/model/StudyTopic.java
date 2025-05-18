@@ -1,12 +1,11 @@
-package com.cohida.LearnAIzer.Model;
+package com.cohida.LearnAIzer.model;
 
+import com.cohida.LearnAIzer.enums.CurrentKnowledgeEnum;
+import com.cohida.LearnAIzer.enums.StudyStyleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.IdGeneratorType;
 
-import java.lang.annotation.ElementType;
 import java.time.LocalDate;
 
 @Entity

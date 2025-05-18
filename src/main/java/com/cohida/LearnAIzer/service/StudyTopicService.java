@@ -1,6 +1,6 @@
-package com.cohida.LearnAIzer.Service;
-import com.cohida.LearnAIzer.Model.StudyTopic;
-import com.cohida.LearnAIzer.Repository.StudyTopicRepository;
+package com.cohida.LearnAIzer.service;
+import com.cohida.LearnAIzer.model.StudyTopic;
+import com.cohida.LearnAIzer.repository.StudyTopicRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;

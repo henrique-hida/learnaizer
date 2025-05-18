@@ -1,6 +1,6 @@
-package com.cohida.LearnAIzer.Repository;
+package com.cohida.LearnAIzer.repository;
 
-import com.cohida.LearnAIzer.Model.StudyTopic;
+import com.cohida.LearnAIzer.model.StudyTopic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

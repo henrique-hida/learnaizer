@@ -1,6 +1,6 @@
-package com.cohida.LearnAIzer.Controller;
-import com.cohida.LearnAIzer.Model.StudyTopic;
-import com.cohida.LearnAIzer.Service.StudyTopicService;
+package com.cohida.LearnAIzer.controller;
+import com.cohida.LearnAIzer.model.StudyTopic;
+import com.cohida.LearnAIzer.service.StudyTopicService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

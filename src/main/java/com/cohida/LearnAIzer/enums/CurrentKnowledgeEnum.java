@@ -1,4 +1,4 @@
-package com.cohida.LearnAIzer.Model;
+package com.cohida.LearnAIzer.enums;
 
 public enum CurrentKnowledgeEnum {
 
