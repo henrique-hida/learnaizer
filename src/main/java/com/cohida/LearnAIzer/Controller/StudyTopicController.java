@@ -13,29 +13,26 @@ public class StudyTopicController {
 
     private StudyTopicService studyTopicService;
 
-    public StudyTopicController() {
-    }
-
     public StudyTopicController(StudyTopicService studyTopicService) {
         this.studyTopicService = studyTopicService;
     }
 
     // POST
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<StudyTopic> createStudyTopic(@RequestBody StudyTopic studyTopic) {
         StudyTopic savedStudyTopic = studyTopicService.saveStudyTopic(studyTopic);
         return ResponseEntity.ok(savedStudyTopic);
     }
 
     // GET ALL
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<StudyTopic>> listAllStudyTopics() {
         List<StudyTopic> studyTopics = studyTopicService.listAllStudyTopics();
         return ResponseEntity.ok(studyTopics);
     }
 
     // GET BY ID
-    @GetMapping
+    @GetMapping("/list/{id}")
     public ResponseEntity<?> listStudyTopicById(@PathVariable Long id) {
         Optional<StudyTopic> studyTopicById = studyTopicService.listStudyTopicById(id);
         if (studyTopicById.isPresent()) {
@@ -59,7 +56,7 @@ public class StudyTopicController {
     }
 
     // DELETE
-    @DeleteMapping
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteStudyTopic(@PathVariable Long id) {
         studyTopicService.deleteStudyTopic(id);
         return ResponseEntity.noContent().build();

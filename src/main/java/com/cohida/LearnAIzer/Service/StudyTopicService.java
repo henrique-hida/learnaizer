@@ -1,5 +1,4 @@
 package com.cohida.LearnAIzer.Service;
-import com.cohida.LearnAIzer.Controller.StudyTopicController;
 import com.cohida.LearnAIzer.Model.StudyTopic;
 import com.cohida.LearnAIzer.Repository.StudyTopicRepository;
 import org.springframework.stereotype.Service;
@@ -10,14 +9,9 @@ import java.util.Optional;
 public class StudyTopicService {
 
     private StudyTopicRepository studyTopicRepository;
-    private StudyTopicController studyTopicController;
 
-    public StudyTopicService() {
-    }
-
-    public StudyTopicService(StudyTopicRepository studyTopicRepository, StudyTopicController studyTopicController) {
+    public StudyTopicService(StudyTopicRepository studyTopicRepository) {
         this.studyTopicRepository = studyTopicRepository;
-        this.studyTopicController = studyTopicController;
     }
 
     public StudyTopic saveStudyTopic(StudyTopic studyTopic) {
