@@ -44,7 +44,7 @@ public class StudyTopicController {
     }
 
     // UPDATE
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<StudyTopic> editStudyTopic(@RequestBody StudyTopic studyTopic, @PathVariable Long id) {
         return studyTopicService.listStudyTopicById(id)
                 .map(existingStudyTopic -> {
