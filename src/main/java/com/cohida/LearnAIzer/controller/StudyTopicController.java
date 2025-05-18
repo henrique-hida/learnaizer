@@ -58,7 +58,12 @@ public class StudyTopicController {
     // DELETE
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteStudyTopic(@PathVariable Long id) {
-        studyTopicService.deleteStudyTopic(id);
-        return ResponseEntity.noContent().build();
+        if (studyTopicService.listStudyTopicById(id).isPresent()) {
+            studyTopicService.deleteStudyTopic(id);
+            return ResponseEntity.ok("StudyTopic deleted successfully!");
+        } else {
+            return ResponseEntity.noContent().build();
         }
     }
+
+}
